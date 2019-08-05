@@ -1,14 +1,16 @@
-import React from "react";
-import data from "./data";
-import { Card } from "./components";
+import React from 'react';
+import { ModalManager } from './container';
+import { Route, Switch } from 'react-router-dom';
+import { Main, Game } from './pages';
 
 function App() {
   return (
-    <div>
-      {data.map(d => (
-        <Card {...d} />
-      ))}
-    </div>
+    <ModalManager>
+      <Switch>
+        <Route path="/" component={Main} />
+        <Route path="/game" component={Game} />
+      </Switch>
+    </ModalManager>
   );
 }
 
