@@ -1,4 +1,4 @@
-import React, { FC, ChangeEvent, useState, useCallback, useEffect } from 'react';
+import React, { FC, ChangeEvent, useState, useCallback, KeyboardEvent } from 'react';
 import styled from 'styled-components';
 import { PlayerModel } from '../../model';
 
@@ -28,7 +28,7 @@ const PlayerCard: FC<IPlayerCardProps> = ({ name, onChangeName }) => {
   );
 
   const handleEnterPress = useCallback(
-    (e: WindowEventMap['keypress']) => {
+    (e: KeyboardEvent<HTMLInputElement>) => {
       if (e.keyCode === 13) {
         setEditable(false);
       }
@@ -36,18 +36,21 @@ const PlayerCard: FC<IPlayerCardProps> = ({ name, onChangeName }) => {
     [setEditable],
   );
 
-  useEffect(() => {
-    if (editable) {
-      window.addEventListener('keypress', handleEnterPress);
-    }
-    return () => {
-      window.removeEventListener('keypress', handleEnterPress);
-    };
-  }, [editable, handleEnterPress]);
+  const handleInputBlur = useCallback(() => {
+    setTimeout(() => {
+      setEditable(false);
+    }, 100);
+  }, [setEditable]);
 
   return (
     <div>
-      <PlayerNameInput disabled={!editable} value={name} onChange={onChangeName} />
+      <PlayerNameInput
+        disabled={!editable}
+        value={name}
+        onChange={onChangeName}
+        onBlur={handleInputBlur}
+        onKeyPress={handleEnterPress}
+      />
       {editable ? (
         <button onClick={handleClickEdit(false)}>done</button>
       ) : (
