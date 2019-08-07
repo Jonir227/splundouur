@@ -26,6 +26,7 @@ const Setting = () => {
     (index: number) => (e: ChangeEvent<HTMLInputElement>) => {
       const { value } = e.target;
       dispatch(setPlayerNamme(index, value));
+      setModifiied(true);
     },
     [dispatch],
   );
