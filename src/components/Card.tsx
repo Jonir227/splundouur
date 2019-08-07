@@ -2,6 +2,7 @@ import React, { useMemo } from "react";
 import styled from "styled-components";
 import { CardModel } from "../model";
 import { BASE_SIZE, COLOR_ORDER } from "../constants";
+import { entries } from '../utils/object';
 
 const CardFrame = styled.div`
   position: relative;
@@ -66,9 +67,7 @@ const Price = styled.div<{ cardColor: CardColor }>`
 `;
 
 export const Card = ({ value, color, price }: CardModel) => {
-  const prices = useMemo(() => {
-    return (Object.entries(price) as [CardColor, number][]).sort(([first], [second]) => COLOR_ORDER[first] - COLOR_ORDER[second]);
-  }, [price]);
+  const prices = useMemo(() => entries(price).sort(([first], [second]) => COLOR_ORDER[first] - COLOR_ORDER[second]), [price]);
   return (
     <CardFrame>
       <CardHeader>
