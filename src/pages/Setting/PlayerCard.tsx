@@ -43,7 +43,8 @@ const PlayerCard: FC<IPlayerCardProps> = ({ name, onChangeName }) => {
 
   const handleEnterPress = useCallback(
     (e: KeyboardEvent<HTMLInputElement>) => {
-      if (e.keyCode === 13) {
+      const keyCode = e.keyCode || e.which;
+      if (keyCode === 13) {
         setEditable(false);
       }
     },
