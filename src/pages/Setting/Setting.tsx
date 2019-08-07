@@ -4,6 +4,7 @@ import { Prompt } from 'react-router-dom';
 import { IRootStore } from '../../redux/reducers';
 import PlayerCard from './PlayerCard';
 import { setPlayerNumber } from '../../redux/actions/globalActions';
+import { setPlayerNamme } from '../../redux/actions/palyerActions';
 
 const Setting = () => {
   const [isModified, setModifiied] = useState(false);
@@ -21,6 +22,14 @@ const Setting = () => {
     [dispatch, setModifiied],
   );
 
+  const handlePlayerNameChange = useCallback(
+    (index: number) => (e: ChangeEvent<HTMLInputElement>) => {
+      const { value } = e.target;
+      dispatch(setPlayerNamme(index, value));
+    },
+    [dispatch],
+  );
+
   return (
     <>
       {isModified && <Prompt message="홈 화면으로 돌아가시겠습니까?" />}
@@ -32,8 +41,8 @@ const Setting = () => {
           <option value={4}>4</option>
         </select>
         <div>
-          {players.map(p => (
-            <PlayerCard key={p.name} {...p} />
+          {players.map((p, index) => (
+            <PlayerCard key={p.id} {...p} onChangeName={handlePlayerNameChange(index)} />
           ))}
         </div>
       </div>
