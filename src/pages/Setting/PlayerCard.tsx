@@ -17,11 +17,17 @@ interface IPlayerCardProps extends PlayerModel {
   onChangeName: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
+let isBlured = false;
+
 const PlayerCard: FC<IPlayerCardProps> = ({ name, onChangeName }) => {
   const [editable, setEditable] = useState(false);
 
   const handleClickEdit = useCallback(
     (condition: boolean) => () => {
+      if (isBlured) {
+        isBlured = false;
+        return;
+      }
       setEditable(condition);
     },
     [setEditable],
@@ -37,9 +43,8 @@ const PlayerCard: FC<IPlayerCardProps> = ({ name, onChangeName }) => {
   );
 
   const handleInputBlur = useCallback(() => {
-    setTimeout(() => {
-      setEditable(false);
-    }, 100);
+    setEditable(false);
+    isBlured = true;
   }, [setEditable]);
 
   return (
