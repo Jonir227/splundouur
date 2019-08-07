@@ -1,17 +1,18 @@
-import React from "react";
-import { useModal } from "../hooks";
+import React, { useCallback } from 'react';
+import { useDispatch } from 'react-redux';
+import { startGame } from '../redux/actions/globalActions';
 
 export const Main = () => {
-  const { openModal } = useModal();
+  const dispatch = useDispatch();
+
+  const handleStartClick = useCallback(() => {
+    dispatch(startGame());
+  }, [dispatch]);
+
   return (
     <div>
-      <button
-        onClick={() => {
-          openModal(<div>112</div>);
-        }}
-      >
-        열기
-      </button>
+      게임을 시작해볼까..?
+      <button onClick={handleStartClick}>start</button>
     </div>
   );
 };

@@ -1,13 +1,15 @@
 import React from 'react';
-import { ModalManager } from './container';
+import { ModalManager, GameManager } from './container';
 import { Route, Switch } from 'react-router-dom';
 import { Main, Game } from './pages';
 
 function App() {
   return (
     <ModalManager>
+      <GameManager />
       <Switch>
-        <Route path="/" component={Main} />
+        <Route exact path="/" component={Main} />
+        <Route path="/setting" render={() => <div>hi, this is setting</div>} />
         <Route path="/game" component={Game} />
       </Switch>
     </ModalManager>
