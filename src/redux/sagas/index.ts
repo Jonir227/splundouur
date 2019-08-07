@@ -1,6 +1,8 @@
+import { take } from 'redux-saga/effects';
+
 function* rootSaga() {
   while (true) {
-    yield console.log(1);
+    yield take();
   }
 }
 

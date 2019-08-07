@@ -12,7 +12,7 @@ const App = () => {
   return (
     <ModalManager>
       <GameManager />
-      <Suspense fallback={Fallback}>
+      <Suspense fallback={<Fallback />}>
         <Switch>
           <Route exact path="/" component={Main} />
           <Route path="/setting" component={Setting} />
