@@ -10,19 +10,15 @@ export interface IGlobalStore {
   gameStatus: GameStatus;
   numberOfPlayer: number;
   numberOfTurn: number;
-  players: PlayerModel[];
-  currentPlayer: PlayerModel | null;
 }
 
 const defaultState: IGlobalStore = {
   gameStatus: 'MAIN',
   numberOfPlayer: 0,
   numberOfTurn: 0,
-  players: [],
-  currentPlayer: null,
 };
 
-const globalStore = produce((draft: IGlobalStore = defaultState, action: GlobalActions) => {
+const globalStore = produce((draft: IGlobalStore, action: GlobalActions) => {
   switch (action.type) {
     case START_GAME: {
       draft.gameStatus = 'SETTING';
@@ -31,6 +27,6 @@ const globalStore = produce((draft: IGlobalStore = defaultState, action: GlobalA
     default:
       return draft;
   }
-});
+}, defaultState);
 
 export default globalStore;
