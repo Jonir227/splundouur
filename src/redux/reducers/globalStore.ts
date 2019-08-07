@@ -24,7 +24,12 @@ const globalStore = produce((draft: IGlobalStore, action: GlobalActions) => {
       return;
     }
     case SET_GAME_STATUS: {
-      draft.gameStatus = action.payload.status;
+      const { status } = action.payload;
+      if (status === 'MAIN') {
+        return defaultState;
+      } else {
+        draft.gameStatus = status;
+      }
       return;
     }
     case SET_PLAYER_NUMBER: {

@@ -2,7 +2,7 @@ import { PlayerModel } from '../../model';
 import produce from 'immer';
 import shortid from 'shortid';
 import { PlayerActions } from '../actions';
-import { SET_PLAYER_NUMBER } from '../types';
+import { SET_PLAYER_NUMBER, SET_GAME_STATUS } from '../types';
 
 export interface IPlayerStore {
   players: PlayerModel[];
@@ -15,10 +15,10 @@ const defaultPlayer = () => ({
   owns: { green: [], black: [], blue: [], red: [], white: [] },
 });
 
-const defaultState: IPlayerStore = {
+const defaultState = (): IPlayerStore => ({
   players: [defaultPlayer(), defaultPlayer()],
   currentPlayer: null,
-};
+});
 
 const playerStore = produce((draft: IPlayerStore, action: PlayerActions) => {
   switch (action.type) {
@@ -34,7 +34,14 @@ const playerStore = produce((draft: IPlayerStore, action: PlayerActions) => {
       }
       return;
     }
+    case SET_GAME_STATUS: {
+      const { status } = action.payload;
+      if (status === 'MAIN') {
+        return defaultState();
+      }
+      return;
+    }
   }
-}, defaultState);
+}, defaultState());
 
 export default playerStore;
