@@ -1,5 +1,7 @@
-import React from "react";
+import React from 'react';
 
-export const Game = () => {
+const Game = () => {
   return <div />;
 };
+
+export default Game;

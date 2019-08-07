@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { startGame } from '../redux/actions/globalActions';
 
-export const Main = () => {
+const Main = () => {
   const dispatch = useDispatch();
 
   const handleStartClick = useCallback(() => {
@@ -16,3 +16,5 @@ export const Main = () => {
     </div>
   );
 };
+
+export default Main;
