@@ -1,6 +1,6 @@
 import produce from 'immer';
 import { GlobalActions } from '../actions';
-import { START_GAME, SET_PLAYER_NUMBER } from '../types';
+import { START_GAME, SET_PLAYER_NUMBER, SET_GAME_STATUS } from '../types';
 
 // 게임 진행 상태
 export type GameStatus = 'MAIN' | 'SETTING' | 'STARTED';
@@ -21,6 +21,10 @@ const globalStore = produce((draft: IGlobalStore, action: GlobalActions) => {
   switch (action.type) {
     case START_GAME: {
       draft.gameStatus = 'SETTING';
+      return;
+    }
+    case SET_GAME_STATUS: {
+      draft.gameStatus = action.payload.status;
       return;
     }
     case SET_PLAYER_NUMBER: {

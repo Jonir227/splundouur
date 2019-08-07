@@ -1,4 +1,5 @@
 export const START_GAME = 'START_GAME' as const;
+export const SET_GAME_STATUS = 'SET_GAME_STATUS' as const;
 
 export const SET_PLAYER_NUMBER = 'SET_PLAYER_NUMBER' as const;
 export const SET_PLAYER_NAME = 'SET_PLAYER_NAME' as const;

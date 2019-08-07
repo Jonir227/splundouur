@@ -1,16 +1,21 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { FC, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { IRootStore } from '../../redux/reducers';
-import { Redirect } from 'react-router-dom';
-import { usePrevious } from '../../hooks';
+import { Redirect, withRouter } from 'react-router-dom';
+import { RouterProps } from 'react-router';
+import { setGameStatus } from '../../redux/actions/globalActions';
 
-export const GameManager = () => {
+const _GameManager: FC<RouterProps> = ({ history }) => {
   const gameStatus = useSelector((store: IRootStore) => store.global.gameStatus);
-  const prevGameStatus = usePrevious(gameStatus);
+  const dispatch = useDispatch();
 
-  if (gameStatus === prevGameStatus) {
-    return null;
-  }
+  useEffect(() => {
+    history.listen((h, action) => {
+      if (action === 'POP') {
+        dispatch(setGameStatus('MAIN'));
+      }
+    });
+  }, []);
 
   switch (gameStatus) {
     case 'MAIN': {
@@ -24,3 +29,5 @@ export const GameManager = () => {
     }
   }
 };
+
+export const GameManager = withRouter(_GameManager);

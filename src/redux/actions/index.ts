@@ -1,4 +1,4 @@
-import { StartGame, SetPlayerNumber } from './globalActions';
+import { StartGame, SetPlayerNumber, SetGameStatus } from './globalActions';
 
-export type GlobalActions = StartGame | SetPlayerNumber;
+export type GlobalActions = StartGame | SetPlayerNumber | SetGameStatus;
 export type PlayerActions = SetPlayerNumber;
