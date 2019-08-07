@@ -1,4 +1,4 @@
-import React, { FC, ChangeEvent, useState, useCallback, KeyboardEvent } from 'react';
+import React, { FC, ChangeEvent, useState, useCallback, KeyboardEvent, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { PlayerModel } from '../../model';
 
@@ -21,6 +21,14 @@ let isBlured = false;
 
 const PlayerCard: FC<IPlayerCardProps> = ({ name, onChangeName }) => {
   const [editable, setEditable] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  /* edit시 auto focus */
+  useEffect(() => {
+    if (editable && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [editable]);
 
   const handleClickEdit = useCallback(
     (condition: boolean) => () => {
@@ -50,6 +58,7 @@ const PlayerCard: FC<IPlayerCardProps> = ({ name, onChangeName }) => {
   return (
     <div>
       <PlayerNameInput
+        ref={inputRef}
         disabled={!editable}
         value={name}
         onChange={onChangeName}
@@ -59,8 +68,8 @@ const PlayerCard: FC<IPlayerCardProps> = ({ name, onChangeName }) => {
       {editable ? (
         <button onClick={handleClickEdit(false)}>done</button>
       ) : (
-        <button onClick={handleClickEdit(true)}>edit</button>
-      )}
+          <button onClick={handleClickEdit(true)}>edit</button>
+        )}
     </div>
   );
 };
