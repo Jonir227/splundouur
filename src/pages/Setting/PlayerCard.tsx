@@ -1,6 +1,15 @@
-import React, { FC, ChangeEvent, useState, useCallback, KeyboardEvent, useRef, useEffect } from 'react';
+import React, {
+  FC,
+  ChangeEvent,
+  useState,
+  useCallback,
+  KeyboardEvent,
+  useRef,
+  useEffect,
+} from 'react';
 import styled from 'styled-components';
 import { PlayerModel } from '../../model';
+import { useOnClickOutside } from '../../hooks';
 
 const PlayerNameInput = styled.input`
   &:disabled {
@@ -17,13 +26,17 @@ interface IPlayerCardProps extends PlayerModel {
   onChangeName: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-let isBlured = false;
-
 const PlayerCard: FC<IPlayerCardProps> = ({ name, onChangeName }) => {
   const [editable, setEditable] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  /* edit시 auto focus */
+  const outSideClickWrapperRef = useOnClickOutside<HTMLDivElement>(() => {
+    setEditable(false);
+  });
+
+  /**
+   * Edit시에 실행하는 동작
+   */
   useEffect(() => {
     if (editable && inputRef.current) {
       inputRef.current.focus();
@@ -32,10 +45,6 @@ const PlayerCard: FC<IPlayerCardProps> = ({ name, onChangeName }) => {
 
   const handleClickEdit = useCallback(
     (condition: boolean) => () => {
-      if (isBlured) {
-        isBlured = false;
-        return;
-      }
       setEditable(condition);
     },
     [setEditable],
@@ -51,26 +60,20 @@ const PlayerCard: FC<IPlayerCardProps> = ({ name, onChangeName }) => {
     [setEditable],
   );
 
-  const handleInputBlur = useCallback(() => {
-    setEditable(false);
-    isBlured = true;
-  }, [setEditable]);
-
   return (
-    <div>
+    <div ref={outSideClickWrapperRef}>
       <PlayerNameInput
         ref={inputRef}
         disabled={!editable}
         value={name}
         onChange={onChangeName}
-        onBlur={handleInputBlur}
         onKeyPress={handleEnterPress}
       />
       {editable ? (
         <button onClick={handleClickEdit(false)}>done</button>
       ) : (
-          <button onClick={handleClickEdit(true)}>edit</button>
-        )}
+        <button onClick={handleClickEdit(true)}>edit</button>
+      )}
     </div>
   );
 };
