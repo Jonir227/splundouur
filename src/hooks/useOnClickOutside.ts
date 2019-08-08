@@ -1,4 +1,5 @@
 import { useRef, useEffect, useCallback } from 'react';
+import { useWindowEvent } from './useWindowEvent';
 
 export const useOnClickOutside = <T extends HTMLElement>(
   fn: (e?: WindowEventMap['click']) => void,
@@ -20,12 +21,7 @@ export const useOnClickOutside = <T extends HTMLElement>(
     [fnRef, ref],
   );
 
-  useEffect(() => {
-    window.addEventListener('click', onClickOutSide);
-    return () => {
-      window.removeEventListener('click', onClickOutSide);
-    };
-  }, []);
+  useWindowEvent('click', onClickOutSide, [onClickOutSide]);
 
   return ref;
 };
