@@ -10,5 +10,5 @@ export const useWindowEvent = <T extends keyof WindowEventMap>(
     return () => {
       window.removeEventListener(event, fn);
     };
-  }, deps);
+  }, [event, fn, ...deps]);
 };

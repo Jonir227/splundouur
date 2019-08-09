@@ -10,6 +10,7 @@ import React, {
 import styled from 'styled-components';
 import { PlayerModel } from '../../model';
 import { useOnClickOutside } from '../../hooks';
+import { getRandomImage } from '../../api';
 
 const PlayerNameInput = styled.input`
   &:disabled {
@@ -28,11 +29,18 @@ interface IPlayerCardProps extends PlayerModel {
 
 const PlayerCard: FC<IPlayerCardProps> = ({ name, onChangeName }) => {
   const [editable, setEditable] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const [imgData, setImageData] = useState<string>('');
 
+  const inputRef = useRef<HTMLInputElement>(null);
   const outSideClickWrapperRef = useOnClickOutside<HTMLDivElement>(() => {
     setEditable(false);
   });
+
+  useEffect(() => {
+    getRandomImage(200).then(i => {
+      setImageData(i);
+    });
+  }, []);
 
   /**
    * Edit시에 실행하는 동작
@@ -42,6 +50,12 @@ const PlayerCard: FC<IPlayerCardProps> = ({ name, onChangeName }) => {
       inputRef.current.focus();
     }
   }, [editable]);
+
+  const handleRefresh = useCallback(() => {
+    getRandomImage(200).then(i => {
+      setImageData(i);
+    });
+  }, [setImageData]);
 
   const handleClickEdit = useCallback(
     (condition: boolean) => () => {
@@ -61,19 +75,25 @@ const PlayerCard: FC<IPlayerCardProps> = ({ name, onChangeName }) => {
   );
 
   return (
-    <div ref={outSideClickWrapperRef}>
-      <PlayerNameInput
-        ref={inputRef}
-        disabled={!editable}
-        value={name}
-        onChange={onChangeName}
-        onKeyPress={handleEnterPress}
-      />
-      {editable ? (
-        <button onClick={handleClickEdit(false)}>done</button>
-      ) : (
-        <button onClick={handleClickEdit(true)}>edit</button>
-      )}
+    <div>
+      <div>
+        <img src={imgData} alt={`${name}의 프로필 사진`} />
+        <button onClick={handleRefresh}>refresh</button>
+      </div>
+      <div ref={outSideClickWrapperRef}>
+        <PlayerNameInput
+          ref={inputRef}
+          disabled={!editable}
+          value={name}
+          onChange={onChangeName}
+          onKeyPress={handleEnterPress}
+        />
+        {editable ? (
+          <button onClick={handleClickEdit(false)}>done</button>
+        ) : (
+          <button onClick={handleClickEdit(true)}>edit</button>
+        )}
+      </div>
     </div>
   );
 };
