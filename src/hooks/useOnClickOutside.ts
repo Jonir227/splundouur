@@ -1,4 +1,4 @@
-import { useRef, useEffect, useCallback } from 'react';
+import { useRef, useCallback } from 'react';
 import { useWindowEvent } from './useWindowEvent';
 
 export const useOnClickOutside = <T extends HTMLElement>(
@@ -8,9 +8,7 @@ export const useOnClickOutside = <T extends HTMLElement>(
   const fnRef = useRef(fn);
 
   // 매번 등록된 함수를 업데이트
-  useEffect(() => {
-    fnRef.current = fn;
-  });
+  fnRef.current = fn;
 
   const onClickOutSide = useCallback(
     (e: WindowEventMap['click']) => {
