@@ -29,6 +29,7 @@ interface IPlayerCardProps extends PlayerModel {
 
 const PlayerCard: FC<IPlayerCardProps> = ({ name, onChangeName }) => {
   const [editable, setEditable] = useState(false);
+  // TODO: 플레이어 스토어로 데이터 옮겨야함
   const [imgData, setImageData] = useState<string>('');
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -37,9 +38,7 @@ const PlayerCard: FC<IPlayerCardProps> = ({ name, onChangeName }) => {
   });
 
   useEffect(() => {
-    getRandomImage(200).then(i => {
-      setImageData(i);
-    });
+    getRandomImage(200).then(setImageData);
   }, []);
 
   /**
@@ -52,9 +51,7 @@ const PlayerCard: FC<IPlayerCardProps> = ({ name, onChangeName }) => {
   }, [editable]);
 
   const handleRefresh = useCallback(() => {
-    getRandomImage(200).then(i => {
-      setImageData(i);
-    });
+    getRandomImage(200).then(setImageData);
   }, [setImageData]);
 
   const handleClickEdit = useCallback(

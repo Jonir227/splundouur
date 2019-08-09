@@ -18,7 +18,7 @@ export const getRandomImage = (size: number): Promise<string> => {
       };
       img.src = `https://picsum.photos/${size}?no-cache=${shortid.generate()}`;
     } catch (err) {
-      reject();
+      reject(err);
     }
   });
 };
