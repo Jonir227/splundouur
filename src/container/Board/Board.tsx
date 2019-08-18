@@ -5,9 +5,8 @@ import cardData from '../../data';
 
 const BoardContainer = styled.div`
   display: flex;
-  width: 90%;
-  height: 90vh;
-  margin: auto;
+  width: 100%;
+  height: 100%;
 `;
 const DevBoard = styled.div`
   flex: 1 0 80%;

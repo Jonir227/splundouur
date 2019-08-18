@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Prompt } from 'react-router-dom';
 import { IRootStore } from '../../redux/reducers';
 import PlayerCard from './PlayerCard';
-import { setPlayerNumber } from '../../redux/actions/globalActions';
+import { setPlayerNumber, setGameStatus } from '../../redux/actions/globalActions';
 import { setPlayerNamme } from '../../redux/actions/palyerActions';
 
 const Setting = () => {
@@ -31,6 +31,8 @@ const Setting = () => {
     [dispatch],
   );
 
+  const handleGameStart = () => dispatch(setGameStatus('STARTED'));
+
   return (
     <>
       {isModified && <Prompt message="홈 화면으로 돌아가시겠습니까?" />}
@@ -45,6 +47,9 @@ const Setting = () => {
           {players.map((p, index) => (
             <PlayerCard key={p.id} {...p} onChangeName={handlePlayerNameChange(index)} />
           ))}
+        </div>
+        <div>
+          <button onClick={handleGameStart}>시작하기</button>
         </div>
       </div>
     </>
