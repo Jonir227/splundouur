@@ -2,7 +2,7 @@ import { PlayerModel } from '../../model';
 import produce from 'immer';
 import shortid from 'shortid';
 import { PlayerActions } from '../actions';
-import { SET_PLAYER_NUMBER, SET_GAME_STATUS, SET_PLAYER_NAME } from '../types';
+import { SET_PLAYER_NUMBER, SET_GAME_STATUS, SET_PLAYER_NAME, SET_PLAYER_IMG } from '../types';
 
 interface IInGamePlayerModel extends PlayerModel {
   id: string;
@@ -20,6 +20,7 @@ const defaultPlayer = () => {
     name: `player [${id}]`,
     coins: { gold: 0, green: 0, black: 0, blue: 0, red: 0, white: 0 },
     owns: { green: [], black: [], blue: [], red: [], white: [] },
+    img: `player image`,
   };
 };
 
@@ -53,6 +54,10 @@ const playerStore = produce((draft: IPlayerStore, action: PlayerActions) => {
       const { index, name } = action.payload;
       draft.players[index].name = name;
       return;
+    }
+    case SET_PLAYER_IMG: {
+      const { index, img } = action.payload;
+      draft.players[index].img = img;
     }
   }
 }, defaultState());

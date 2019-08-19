@@ -4,7 +4,7 @@ import { Prompt } from 'react-router-dom';
 import { IRootStore } from '../../redux/reducers';
 import PlayerCard from './PlayerCard';
 import { setPlayerNumber, setGameStatus } from '../../redux/actions/globalActions';
-import { setPlayerNamme } from '../../redux/actions/palyerActions';
+import { setPlayerNamme, setPlayerImg } from '../../redux/actions/playerActions';
 
 const Setting = () => {
   const [isModified, setModifiied] = useState(false);
@@ -31,6 +31,13 @@ const Setting = () => {
     [dispatch],
   );
 
+  const handlePlayerImgChange = useCallback(
+    (index: number) => (img: string) => {
+      dispatch(setPlayerImg(index, img));
+    },
+    [dispatch],
+  );
+
   const handleGameStart = () => dispatch(setGameStatus('STARTED'));
 
   return (
@@ -45,7 +52,12 @@ const Setting = () => {
         </select>
         <div>
           {players.map((p, index) => (
-            <PlayerCard key={p.id} {...p} onChangeName={handlePlayerNameChange(index)} />
+            <PlayerCard
+              key={p.id}
+              {...p}
+              onChangeName={handlePlayerNameChange(index)}
+              onChangeImg={handlePlayerImgChange(index)}
+            />
           ))}
         </div>
         <div>

@@ -25,12 +25,11 @@ const PlayerNameInput = styled.input`
 
 interface IPlayerCardProps extends PlayerModel {
   onChangeName: (e: ChangeEvent<HTMLInputElement>) => void;
+  onChangeImg: (img: string) => void;
 }
 
-const PlayerCard: FC<IPlayerCardProps> = ({ name, onChangeName }) => {
+const PlayerCard: FC<IPlayerCardProps> = ({ name, img, onChangeName, onChangeImg }) => {
   const [editable, setEditable] = useState(false);
-  // TODO: 플레이어 스토어로 데이터 옮겨야함
-  const [imgData, setImageData] = useState<string>('');
 
   const inputRef = useRef<HTMLInputElement>(null);
   const outSideClickWrapperRef = useOnClickOutside<HTMLDivElement>(() => {
@@ -38,7 +37,7 @@ const PlayerCard: FC<IPlayerCardProps> = ({ name, onChangeName }) => {
   });
 
   useEffect(() => {
-    getRandomImage(200).then(setImageData);
+    getRandomImage(200).then(onChangeImg);
   }, []);
 
   /**
@@ -51,8 +50,8 @@ const PlayerCard: FC<IPlayerCardProps> = ({ name, onChangeName }) => {
   }, [editable]);
 
   const handleRefresh = useCallback(() => {
-    getRandomImage(200).then(setImageData);
-  }, [setImageData]);
+    getRandomImage(200).then(onChangeImg);
+  }, [onChangeImg]);
 
   const handleClickEdit = useCallback(
     (condition: boolean) => () => {
@@ -74,7 +73,7 @@ const PlayerCard: FC<IPlayerCardProps> = ({ name, onChangeName }) => {
   return (
     <div>
       <div>
-        <img src={imgData} alt={`${name}의 프로필 사진`} />
+        <img src={img} alt={`${name}의 프로필 사진`} />
         <button onClick={handleRefresh}>refresh</button>
       </div>
       <div ref={outSideClickWrapperRef}>

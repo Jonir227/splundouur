@@ -3,6 +3,7 @@ export const SET_GAME_STATUS = 'SET_GAME_STATUS' as const;
 
 export const SET_PLAYER_NUMBER = 'SET_PLAYER_NUMBER' as const;
 export const SET_PLAYER_NAME = 'SET_PLAYER_NAME' as const;
+export const SET_PLAYER_IMG = 'SET_PLAYER_IMG' as const;
 
 export const TURN_START = 'TURN_START' as const;
 export const TURN_END = 'TURN_END' as const;
