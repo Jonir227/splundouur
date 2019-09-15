@@ -38,6 +38,7 @@ const PlayerCard: FC<IPlayerCardProps> = ({ name, img, onChangeName, onChangeImg
 
   useEffect(() => {
     getRandomImage(200).then(onChangeImg);
+    //eslint-disable-next-line
   }, []);
 
   /**

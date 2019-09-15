@@ -10,5 +10,6 @@ export const useWindowEvent = <T extends keyof WindowEventMap>(
     return () => {
       window.removeEventListener(event, fn);
     };
+  // eslint-disable-next-line
   }, [event, fn, ...deps]);
 };

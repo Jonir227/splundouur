@@ -15,6 +15,7 @@ const _GameManager: FC<RouterProps> = ({ history }) => {
         dispatch(setGameStatus('MAIN'));
       }
     });
+    // eslint-disable-next-line
   }, []);
 
   switch (gameStatus) {
